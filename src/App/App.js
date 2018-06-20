@@ -26,12 +26,14 @@ class App extends Component {
     }
 
     if (this.regEmail.test(this.state.email) && this.regPassword.test(this.state.password)) {
-      let valid = authCheck(this.state.email, this.state.password);
-      if (valid) {
-        this.setState({message: 'login successful', style: 'success'});
-      } else {
-        this.setState({message: 'invalid email or password',  style: 'warning'});
-      }
+      authCheck(this.state.email, this.state.password)
+        .then(res => {
+          console.log(res);
+          this.setState({message: 'login successful', style: 'success'});
+        }).catch(err => {
+          console.log(err);
+          this.setState({message: 'invalid email or password',  style: 'warning'});
+        });
     } else if (!this.regEmail.test(this.state.email)) {
       this.setState({message: 'invalid email', style: 'warning'});
     } else if (!this.regPassword.test(this.state.password)) {
