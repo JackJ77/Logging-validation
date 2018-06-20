@@ -2,9 +2,7 @@
   width: 200px;
   text-align: center;
   padding: 10px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  margin: 300px auto;
   opacity: 0.9;
 }
 

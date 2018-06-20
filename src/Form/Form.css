@@ -1,9 +1,10 @@
-.App {
+.Form {
   margin: 25vh auto 0 auto;
   max-width: 300px;
   padding: 25px;
-  background-color: #ddd;
+  background-color: #eee;
   border-radius: 5px;
+  border: 0.4px solid #ddd;
 }
 
 label {
@@ -30,13 +31,13 @@ button {
   font-size: 16px;
   height: 40px;
   border-radius: 5px;
-  background-color: #3ea041;
+  background-color: #00ad0e;
   border: none;
   transition: 0.3s;
 }
 
 button:hover {
-  background-color: #4fb152;
+  background-color: #11be1f;
 }
 
 @media (max-width: 260px) {

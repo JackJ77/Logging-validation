@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Form.css';
 import authCheck from './../utilities/authCheck';
 import MessageBox from './../MessageBox/MessageBox';
 
@@ -10,7 +10,7 @@ const validationStyle = {
   marginTop: '-7px'
 };
 
-class App extends Component {
+class Form extends Component {
   state = {
     email: '',
     password: '',
@@ -58,7 +58,7 @@ class App extends Component {
     return (
         <div>
           {this.state.message === 'login successful' ? <MessageBox style={{style: 'success'}} message={this.state.message} /> :
-          <form onSubmit={this.handleSubmit} className="App">
+          <form onSubmit={this.handleSubmit} className="Form">
               <label htmlFor="email">Email</label>
               <input
                 placeholder="test@test.pl"
@@ -86,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Form;
