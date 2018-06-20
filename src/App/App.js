@@ -3,12 +3,19 @@ import './App.css';
 import authCheck from './../utilities/authCheck';
 import MessageBox from './../MessageBox/MessageBox';
 
+const validationStyle = {
+  display: 'block',
+  color: 'red',
+  marginBottom: '5px',
+  marginTop: '-7px'
+};
+
 class App extends Component {
   state = {
     email: '',
     password: '',
     message: '',
-    style: ''
+    messageEmail: ''
   }
 
   componentDidMount() {
@@ -18,6 +25,16 @@ class App extends Component {
 
   onInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+
+    if ((e.target.name === 'email')&&(!this.regEmail.test(e.target.value))) {
+       this.setState({messageEmail: 'invalid email'});
+    } else if ((e.target.name === 'password')&&(!this.regPassword.test(e.target.value))) {
+       this.setState({message: 'invalid password'});
+    } else if (this.regPassword.test(e.target.value)){
+      this.setState({message: ''});
+    } else {
+      this.setState({messageEmail: ''});
+    }
   }
 
   handleSubmit = (event) => {
@@ -29,22 +46,18 @@ class App extends Component {
       authCheck(this.state.email, this.state.password)
         .then(res => {
           console.log(res);
-          this.setState({message: 'login successful', style: 'success'});
+          this.setState({message: 'login successful'});
         }).catch(err => {
           console.log(err);
-          this.setState({message: 'invalid email or password',  style: 'warning'});
+          this.setState({message: 'invalid email or password'});
         });
-    } else if (!this.regEmail.test(this.state.email)) {
-      this.setState({message: 'invalid email', style: 'warning'});
-    } else if (!this.regPassword.test(this.state.password)) {
-      this.setState({message: 'invalid password', style: 'warning'});
     }
   }
 
   render() {
     return (
         <div>
-          {this.state.message === 'login successful' ? null :
+          {this.state.message === 'login successful' ? <MessageBox style={{style: 'success'}} message={this.state.message} /> :
           <form onSubmit={this.handleSubmit} className="App">
               <label htmlFor="email">Email</label>
               <input
@@ -54,6 +67,7 @@ class App extends Component {
                 type="text"
                 name="email"
                 id="email" />
+                {(this.state.messageEmail === 'invalid email') ? <small style={validationStyle}>{this.state.messageEmail}</small> : null}
               <label htmlFor="password">Password</label>
               <input
                 placeholder="Password1"
@@ -62,11 +76,11 @@ class App extends Component {
                 type="password"
                 name="password"
                 id="password" />
+                {(this.state.message !== 'invalid email') ? <small style={validationStyle}>{this.state.message}</small> : null}
               <label className="container" htmlFor="remember">Remember me</label>
               <input type="checkbox" name="remember" id="remember" />
               <button type="submit">Login</button>
           </form>}
-          {this.state.message ? <MessageBox style={this.state.style} message={this.state.message} /> : null}
         </div>
     );
   }
